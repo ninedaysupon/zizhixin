@@ -1,0 +1,89 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://172.16.23.43:1111/eureka/,http://172.16.23.42:1111/eureka/
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  aop:
+    auto: true
+    proxy-target-class: true
+  redis:
+    host: 172.16.23.30
+    password:
+    port: 6379
+    database: 8
+    pool:
+      max-active: 80
+      max-idle: 30
+      max-wait: 30
+      min-idle: 10
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.23.20:3306/dd_api?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: dd_api
+    password: eNIhuLJH24MQ
+    hikari:
+      auto-commit: false
+      minimum-idle: 2
+      maximum-pool-size: 10
+      connection-timeout: 10000
+      max-lifetime: 600000
+      idle-timeout: 60000
+      validation-timeout: 1000
+      leak-detection-threshold: 30000
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: MYSQL
+    open-in-view: false
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming.strategy: org.hibernate.cfg.EJB3NamingStrategy
+
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dinglicom/gateway_access_log
+      pattern: '%h %l %u [%{yyyy-MM-dd HH:mm:ss.SSS}t] "%r" %s %b %D'
+      prefix: rollcall_access_log
+      suffix: .log
+    basedir: /dinglicom/tmp/rollcall  
+
+logging.level.com.aizhixin: DEBUG
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 5000
+  ReadTimeout: 60000
+
+
+zookeeper:
+  connecton: 172.16.23.43:2181,172.16.23.42:2181,172.16.23.51:2181
+  path: /rollcall/lock
+  task: /rollcall/task
+
+schedule:
+  execute:  false
+
+sys:
+  version: v0.0.1.66

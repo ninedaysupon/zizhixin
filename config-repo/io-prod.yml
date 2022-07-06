@@ -1,0 +1,85 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  aop:
+    auto: true
+    proxy-target-class: true
+  redis:
+    host: 172.16.23.40
+    port: 6379
+    database: 4
+    pool:
+      max-active: 20
+      max-idle: 10
+      max-wait: 5
+      min-idle: 1
+  http:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 220MB
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.23.21:3306/io?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: io_user
+    password: 
+    hikari:
+      auto-commit: false
+      minimum-idle: 2
+      maximum-pool-size: 10
+      connection-timeout: 10000
+      max-lifetime: 600000
+      idle-timeout: 60000
+      validation-timeout: 1000
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: MYSQL
+    open-in-view: false
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming.strategy: org.hibernate.cfg.EJB3NamingStrategy
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+liquibase:
+  change-log: classpath:liquibase/master.xml
+  default-schema: io
+ribbon:
+  ConnectTimeout: 5000
+  ReadTimeout: 60000
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dinglicom/gateway_access_log
+      pattern: '%h %l %u [%{yyyy-MM-dd HH:mm:ss.SSS}t] "%r" %s %b %D'
+      prefix: io_access_log
+      suffix: .log
+    basedir: /dinglicom/tmp/io
+logging.level.com.aizhixin.cloud: INFO
+
+sys:
+  base:
+    dir: /nfs
+  version: v0.0.1.74

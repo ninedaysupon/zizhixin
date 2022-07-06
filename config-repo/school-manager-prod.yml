@@ -1,0 +1,74 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+    metadata-map:
+      cluster: MAIN
+  client:
+    service-url:
+      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  aop:
+    auto: true
+    proxy-target-class: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.23.21:3306/school_manager_api?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: school_manager
+    password: jjMPQjiHLD6P
+    hikari:
+      auto-commit: false
+      minimum-idle: 2
+      maximum-pool-size: 10
+      connection-timeout: 10000
+      max-lifetime: 600000
+      idle-timeout: 60000
+      validation-timeout: 1000
+      leak-detection-threshold: 30000
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: MYSQL
+    open-in-view: false
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming.strategy: org.hibernate.cfg.EJB3NamingStrategy
+    properties:
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: true
+      hibernate.generate_statistics: false
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      javax.persistence.sharedCache.mode: ENABLE_SELECTIVE
+
+liquibase:
+  change-log: classpath:liquibase/master.xml
+  default-schema: school_manager_api
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dinglicom/gateway_access_log
+      pattern: '%h %l %u [%{yyyy-MM-dd HH:mm:ss.SSS}t] "%r" %s %b %D'
+      prefix: school_manager_access_log
+      suffix: .log
+logging.level.com.aizhixin.cloud: INFO
+
+dd.api.url: http://gateway.aizhixin.com/diandian_api
+
+kj:
+  host: http://em.aizhixin.com/em_api2
+
+sys:
+  version: v0.0.1.76

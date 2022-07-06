@@ -1,0 +1,185 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+spring:
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 30MB
+      max-request-size: 30MB
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  aop:
+    auto: true
+    proxy-target-class: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.23.21:3306/org_api?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: org_api
+    password: 
+    hikari:
+      auto-commit: false
+      minimum-idle: 10
+      maximum-pool-size: 100
+      connection-timeout: 30000
+      max-lifetime: 600000
+      idle-timeout: 60000
+      validation-timeout: 30000
+      leak-detection-threshold: 5000
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: MYSQL
+    open-in-view: false
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming.strategy: org.hibernate.cfg.EJB3NamingStrategy
+    properties:
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: true
+      hibernate.generate_statistics: false
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      javax.persistence.sharedCache.mode: ENABLE_SELECTIVE
+  redis:
+    host: 172.16.23.40
+    password:
+    port: 6379
+    database: 5
+    pool:
+      max-active: 100
+      max-idle: 30
+      max-wait: 20
+      min-idle: 10
+  zhixinredis:
+    host: 172.16.23.44
+    password:
+    port: 6379
+    database: 2
+    pool:
+      max-active: 100
+      max-idle: 30
+      max-wait: 20
+      min-idle: 10
+
+  kafka:
+      bootstrap-servers: 172.16.23.42:9092,172.16.100.43:9092,172.16.100.44:9092
+      group-id: PROD_ORG_CONSUMER_GROUP
+hystrix:
+  threadpool:
+    default:
+      maxQueueSize: 1000
+      maximumSize: 300
+      coreSize: 30
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 30000
+liquibase:
+  change-log: classpath:liquibase/master.xml
+  default-schema: org_api
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dinglicom/gateway_access_log
+      pattern: '%h %l %u [%{yyyy-MM-dd HH:mm:ss.SSS}t] "%r" %s %b %D'
+      prefix: org_manager_access_log
+      suffix: .log
+    basedir: /dinglicom/tmp/org_manager  
+logging.level.com.aizhixin.cloud: INFO
+#logging.level.com.zaxxer.hikari: DEBUG
+
+
+zookeeper:
+  connecton: 172.16.23.42:2181,172.16.23.43:2181,172.16.23.44:2181
+  path: /org/lock
+  task: /org/task
+
+
+zhixin.api.url: http://dledu.aizhixin.com/zhixin_api
+dd.api.url: http://dd.aizhixin.com/diandian_api
+period:
+  mycj:
+    orgId: 156
+    week: 5
+topic:
+  class_teacher_add: PROD_CLASS_TEACHER_ADD
+  teaching_class_add: PROD_TEACHING_CLASS_ADD
+  teaching_class_update: PROD_TEACHING_CLASS_UPDATE
+  teaching_class_delete: PROD_TEACHING_CLASS_DELETE
+  teaching_class_teacher_add: PROD_TEACHING_CLASS_TEACHER_ADD
+  teaching_class_teacher_delete: PROD_TEACHING_CLASS_TEACHER_DELETE
+  teaching_class_student_add: PROD_TEACHING_CLASS_STUDENT_ADD
+  teaching_class_student_delete: PROD_TEACHING_CLASS_STUDENT_DELETE
+  teaching_class_user_delete_all: PROD_TEACHING_CLASS_USER_DELETE_ALL
+  student_delete: PROD_STUDENT_DELETE
+  data_syn: PROD_ORG_DATA_SYN2
+
+sys:
+  role:
+    group2m: M
+    group2com: COM
+    group2b: B
+    group2c: C
+    groupm:
+      admin: ROLE_ADMIN
+    groupb:
+      student: ROLE_STUDENT
+      teacher: ROLE_TEACHER
+      orgadmin: ROLE_ORG_ADMIN
+      orgmanager: ROLE_ORG_MANAGER
+      collegeadmin: ROLE_COLLEGE_ADMIN
+      classesadmin: ROLE_CLASSES_ADMIN
+      orgdataview: ROLE_ORG_DATAVIEW
+      collegedataview: ROLE_COLLEG_DATAVIEW
+      orgeducationalmanager : ROLE_ORG_EDUCATIONALMANAGER
+      collegeeducationalmanager: ROLE_COLLEG_EDUCATIONALMANAGER
+      financeadmin: ROLE_FINANCE_ADMIN
+      dormadmin: ROLE_DORM_ADMIN
+      employmentadmin: ROLE_EMPLOYMENT_ADMIN
+      enroladmin: ROLE_ENROL_ADMIN
+    groupcom:
+      teacher: ROLE_COM_TEACHER
+  version: v0.0.2.30
+
+ftp:
+  ftpIp: 117.34.118.159
+  port: 21
+  connectionName: dinglicom
+  connectionPassword: dinglicom1qa2ws#ED
+  remotePath: /orgdata/uploadData
+  failDataPath: /orgdata/failData
+
+zxjy.classesId: 12
+em.api.url: http://em.dlztc.com/em_api2
+
+baidu:
+  ai:
+    appId: 15800448
+    appKey: zOWgsvaXKdZdBDZIO5yCdlTh
+    secretKey: 1NuGkFIPeABECdrhXolUACqCZXbq1Cjh
+    group: aizhixin
+
+face:
+  users:
+    g001: SMSB000A
+    g011: ACXD32A7
+    g087: ACXD32A7

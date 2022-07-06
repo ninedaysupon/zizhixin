@@ -1,0 +1,58 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  aop:
+    auto: true
+    proxy-target-class: true
+
+hystrix:
+  threadpool:
+    default:
+      maxQueueSize: 1000
+      maximumSize: 300
+      coreSize: 30
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 30000
+
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dinglicom/gateway_access_log
+      pattern: '%h %l %u [%{yyyy-MM-dd HH:mm:ss.SSS}t] "%r" %s %b %D'
+      prefix: mobile_public_access_log
+      suffix: .log
+    basedir: /dinglicom/tmp/mobile_public  
+
+logging.level.com.aizhixin.cloud: DEBUG
+#logging.level.com.zaxxer.hikari: DEBUG
+
+zhixin.api.url: http://dledu.aizhixin.com/zhixin_api
+dd_api.url: http://gateway.aizhixin.com/diandian_api
+
+security.key: AIZHIXIN2020OAUT
+sys:
+  version: v0.0.2.3

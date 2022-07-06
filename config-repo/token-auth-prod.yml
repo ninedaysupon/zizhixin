@@ -1,0 +1,56 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  aop:
+    auto: true
+    proxy-target-class: true
+  redis:
+    host: 172.16.23.40
+    port: 6379
+    database: 3
+    pool:
+      max-active: 20
+      max-idle: 10
+      max-wait: 5
+      min-idle: 1
+
+appIds:
+  data:
+    aizhixinkaijuan: ACEF46E88656SWokjh6HB54
+appToken:
+  data:
+      identification: azxpcsingin
+      zhixinhost: http://www.aizhixin.com/zhixin_api
+      infoplus:  /api/account/infoplus
+      sockethost: http://socket.aizhixin.com
+      socketapi: /api/push
+      significantinterval: 10  #（单位）分钟
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dinglicom/gateway_access_log
+      pattern: '%h %l %u [%{yyyy-MM-dd HH:mm:ss.SSS}t] "%r" %s %b %D'
+      prefix: token_auth_log
+      suffix: .log
+    basedir: /dinglicom/tmp/token_auth
+
+logging.level.com.aizhixin.cloud: INFO
+
+
+sys:
+  version: v1.0.1.11

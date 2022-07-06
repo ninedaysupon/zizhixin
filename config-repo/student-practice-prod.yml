@@ -1,0 +1,108 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  aop:
+    auto: true
+    proxy-target-class: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.23.21:3306/student_practice_api?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: student
+    password: dinglicom
+    hikari:
+      auto-commit: false
+      minimum-idle: 10
+      maximum-pool-size: 50
+      connection-timeout: 10000
+      max-lifetime: 600000
+      idle-timeout: 60000
+      validation-timeout: 1000
+      leak-detection-threshold: 30000
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: MYSQL
+    open-in-view: false
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming.strategy: org.hibernate.cfg.EJB3NamingStrategy
+    properties:
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: true
+      hibernate.generate_statistics: false
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      javax.persistence.sharedCache.mode: ENABLE_SELECTIVE  
+  redis:
+    host: 172.16.23.40
+    port: 6379
+    database: 6
+    pool:
+      max-active: 10
+      max-idle: 10
+      max-wait: 5
+      min-idle: 1
+liquibase:
+  change-log: classpath:liquibase/master.xml
+  default-schema: student_practice_api
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dinglicom/gateway_access_log
+      pattern: '%h %l %u [%{yyyy-MM-dd HH:mm:ss.SSS}t] "%r" %s %b %D'
+      prefix: student_practice_access_log
+      suffix: .log
+    basedir: /dinglicom/tmp/student_practice_access 
+logging.level.com.aizhixin.cloud: INFO
+# logging.level.com.zaxxer.hikari: DEBUG
+
+sys:
+  version: v0.0.2.12
+
+dl:
+  dledu:
+    back:
+      host: http://dledu.aizhixin.com/zhixin_api
+      userInfoUrl: /api/web/v1/users/userinfonew
+      userAvatarUrl: /api/account/userAvatarlist
+      listpush: /api/web/v1/push/listpush
+  dd:
+    back:
+      dbname: dd_api
+      host: http://gateway.aizhixin.com/diandian_api
+      savemsg: /api/phone/v1/save 
+  org:
+    back:
+      dbname: org_api
+      host: http://gateway.aizhixin.com/org-manager
+      querymentor: /v1/studentraining/queryinfo
+      querystudent: /v1/mentorstraining/queryinfo
+      querygroupformentor: /v1/mentorstraining/grouplistbyaccountid
+      querygroupinfolist: /v1/trainingmanage/querygroupinfolistbyids
+      queryclassteacher: /v1/classesteacher/list
+      getuserinfo: /v1/user/get/
+
+  em:
+    back:
+      host: http://em.aizhixin.com/em_api2
+      querycommenttotal: /api/web/v1/comment/total
+zookeeper:
+  connecton: 172.16.23.42:2181,172.16.23.43:2181,172.16.23.44:2181
+  path: /practice/lock
+  task: /practice/task

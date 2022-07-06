@@ -1,0 +1,88 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+zuul:
+  semaphore:
+    max-semaphores: 20000
+  host:
+    max-per-route-connections: 10000
+    max-total-connections: 32000
+  routes:
+    org-api:
+      path: /org_manager/**
+      serviceId: org-manager
+    school-api:
+      path: /school_manager/**
+      serviceId: school-manager
+    diandian-api:
+      path: /diandian_api/**
+      serviceId: diandian_api
+      sensitiveHeaders:
+    io-api:
+      path: /io/**
+      serviceId: io
+    token-api:
+      path: /token-auth/**
+      serviceId: token-auth
+      sensitiveHeaders:
+    student-practice:
+      path: /student-practice/**
+      serviceId: student-practice
+      sensitiveHeaders:
+    school_manager_api:
+      path: /school_manager_api/**
+      serviceId: student-practice
+      sensitiveHeaders:
+    mobile-public:
+      path: /mobile-public/**
+      serviceId: mobile-public
+      sensitiveHeaders:
+    rollcall:
+      path: /rollcall/**
+      serviceId: rollcall
+    paycallback:
+      path: /paycallback/**
+      serviceId: paycallback
+      sensitiveHeaders:
+    file-system-api:
+      path: /file_system_api/**
+      serviceId: file_system_api
+      sensitiveHeaders:
+#  ribbon-isolation-strategy: THREAD
+hystrix:
+  threadpool:
+    default:
+      maxQueueSize: 2000
+      maximumSize: 300
+      coreSize: 200
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+ribbon:
+  ConnectTimeout: 8000
+  ReadTimeout: 30000
+
+server.tomcat.basedir: /dinglicom/tmp/gateway
+
+spring:
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 300MB
+      max-request-size: 300MB
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0

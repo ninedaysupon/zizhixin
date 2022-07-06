@@ -1,0 +1,129 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  aop:
+    auto: true
+    proxy-target-class: true
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.23.21:3306/student_dynamics?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: org_api
+    password: 
+    hikari:
+      auto-commit: false
+      minimum-idle: 2
+      maximum-pool-size: 10
+      connection-timeout: 10000
+      max-lifetime: 600000
+      idle-timeout: 60000
+      validation-timeout: 10000
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: MYSQL
+    open-in-view: false
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming.strategy: org.hibernate.cfg.EJB3NamingStrategy
+    properties:
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: true
+      hibernate.generate_statistics: false
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      javax.persistence.sharedCache.mode: ENABLE_SELECTIVE
+  redis:
+    host: 172.16.23.40
+    password:
+    port: 6379
+    database: 0
+    pool:
+      max-active: 100
+      max-idle: 30
+      max-wait: 20
+      min-idle: 10
+
+mongo:
+  primary:
+    database: student_dynamics
+    host: 172.16.23.23
+    port: 27017
+    password:
+  emMongoDb:
+    database: em_api2
+    host: 172.16.23.23
+    port: 27017
+    password:
+
+liquibase:
+  change-log: classpath:liquibase/master.xml
+  default-schema: student_dynamics
+
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dinglicom/analysis_access_log
+      pattern: '%h %l %u [%{yyyy-MM-dd HH:mm:ss.SSS}t] "%r" %s %b %D'
+      prefix: data_analysis_log
+      suffix: .log
+    basedir: /dinglicom/tmp/data_analysis_log
+
+
+logging.level.com.dlztc.cloud: DEBUG
+
+dl:
+  dledu:
+    back:
+      host: http://dledu.aizhixin.com/zhixin_api
+      userInfoUrl: /api/web/v1/users/userinfonew
+      userAvatarUrl: /api/account/userAvatarlist
+      listpush: /api/web/v1/push/listpush
+  org:
+    back:
+      dbname: org_api
+      host: http://gateway.aizhixin.com/org-manager
+  dd:
+    back:
+      dbname: dd_api     
+zookeeper:
+  connecton: 172.16.23.42:2181,172.16.23.43:2181,172.16.23.44:2181
+  path: /analysis/lock
+  task: /analysis/task
+  hystrix:
+  threadpool:
+    default:
+      maxQueueSize: 1000
+      maximumSize: 300
+      coreSize: 100
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 60000
+sync:
+  orgId: 138
+weixin:
+  appkey: wx7c4c2a1ea7ddac89
+  appsecurity: 079d30d4481e203e82d984192e2c2419
+  token: glut2018008
+sys:
+  version: v1.1.0.3

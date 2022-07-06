@@ -1,0 +1,41 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+       defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  aop:
+    auto: true
+    proxy-target-class: true
+
+logging.level.com.aizhixin: DEBUG
+
+sys:
+  version: v0.0.1.48
+
+hystrix:
+  threadpool:
+    default:
+      maxQueueSize: 1000
+      maximumSize: 300
+      coreSize: 100
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 60000

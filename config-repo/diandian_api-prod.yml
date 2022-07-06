@@ -1,0 +1,112 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  data:
+    mongodb:
+      database: dd_api
+      host: 172.16.23.23
+      port: 27017
+      password:
+  aop:
+    auto: true
+    proxy-target-class: true
+  redis:
+    host: 172.16.23.40
+    password:
+    port: 6379
+    database: 1
+    pool:
+      max-active: 80
+      max-idle: 30
+      max-wait: 50
+      min-idle: 20
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.23.21:3306/dd_api?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: dd_api
+    password: 
+    hikari:
+      auto-commit: false
+      minimum-idle: 10
+      maximum-pool-size: 100
+      connection-timeout: 3000
+      max-lifetime: 600000
+      idle-timeout: 60000
+      validation-timeout: 1000
+      leak-detection-threshold: 30000
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: MYSQL
+    open-in-view: false
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming.strategy: org.hibernate.cfg.EJB3NamingStrategy
+    properties:
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: true
+      hibernate.generate_statistics: false
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      javax.persistence.sharedCache.mode: ENABLE_SELECTIVE
+
+liquibase:
+  change-log: classpath:liquibase/master.xml
+  default-schema: dd_api
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dinglicom/gateway_access_log
+      pattern: '%h %l %u [%{yyyy-MM-dd HH:mm:ss.SSS}t] "%r" %s %b %D'
+      prefix: dd_api_access_log
+      suffix: .log
+    basedir: /dinglicom/tmp/diandian_api 
+logging.level.com.dlztc: INFO
+hystrix:
+  threadpool:
+    default:
+      maxQueueSize: 1000
+      maximumSize: 300
+      coreSize: 120
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 600000
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 60000
+ftp:
+  ipAddr: 172.16.23.11
+  port: 21
+  userName: dinglicom
+  password: dinglicom1qa2ws#ED
+  androidPath: Android
+  iosPath: ios
+  downloadPath: http://download.dlztc.com/
+zookeeper:
+  connecton: 172.16.23.42:2181,172.16.23.43:2181,172.16.23.44:2181
+  path: /dd/lock
+  task: /dd/task
+  
+schedule:
+  execute: true  
+sys:
+  version: v0.0.2.31

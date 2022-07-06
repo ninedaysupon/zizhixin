@@ -1,0 +1,104 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+        defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - eth1
+        - em1
+        - em2
+        - em3
+        - em4
+        - usb0
+  aop:
+    auto: true
+    proxy-target-class: true
+  redis:
+    host: 172.16.23.40
+    password:
+    port: 7001
+    database: 15
+    pool:
+      max-active: 10
+      max-idle: 10
+      max-wait: 3
+      min-idle: 1    
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.23.21:3306/pay?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: pay
+    password: jjMPQjiHLD6P
+    hikari:
+      auto-commit: false
+      minimum-idle: 2
+      maximum-pool-size: 10
+      connection-timeout: 10000
+      max-lifetime: 600000
+      idle-timeout: 60000
+      validation-timeout: 1000
+#      leak-detection-threshold: 30000
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: MYSQL
+    open-in-view: false
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming.strategy: org.hibernate.cfg.EJB3NamingStrategy
+
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dinglicom/pay_access_log
+      pattern: '%h %l %u [%{yyyy-MM-dd HH:mm:ss.SSS}t] "%r" %s %b %D'
+      prefix: pay_access_log
+      suffix: .log
+    basedir: /dinglicom/tmp/pay  
+
+logging.level.com.aizhixin: DEBUG
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 5000
+  ReadTimeout: 60000
+
+liquibase:
+  change-log: classpath:liquibase/master.xml
+  default-schema: pay
+
+zookeeper:
+  connecton: 172.16.23.42:2181,172.16.23.43:2181,172.16.23.44:2181
+  path: /pay/lock
+  task: /pay/task
+
+pay:
+  appId: 2017121800944206
+  appPrivateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCt19qoiQHx6fevZsVpb+2n1e9TqdhdfYcHHeF6PHdl+l8/C/Lkdt6ertzZhCdhh8nN2pO0zIZlLmxTUZHs0pA1j525ow6WIpP3TUqKYBh1MXLOB0bExd20taBZKamm6hFCeJQ3gra5MPV4A2u5j8yJ69jScn9KkKZrUFwQGsjy65jHPt7WYWQoDF6nREPQ6NdxDg6EyMcMCP/dOGMJsh1tS/Gnb10N3Y+IqmHSYCWXBvhb9m/6fKyNhHZ07zDju8x3C0KeGOQ5Fn3jgQUjqexH8FUB3IZesH9vFSgONFN7nbadREVVKzDVNVTsv9QblwhRKLcAj131nmCqelEfSiVZAgMBAAECggEAeVUXktuVFPAUZEKZdB6fw61oTX9UuOO803XCgpsjRnS593nyfAyPEje/gr1e8w5gBiIRR3YcMxB0oK5k5+KKridfkUpCCv11QnyakvvA9kKd+zhO51WmiNLfaHvQoePqSfd4k0nTGGwYVzwj+q5ntrd6bF9ngnZ1AJ9ksgTPzeMC6+Rvwsvlz4CcGU3keBn37+vhBGAeOWdF9ZWIK28I5/RCyYqqkSinOmK+S5T/caTjWfNk2kjlE6+RJhbiVUoLDRtxGVSStQl3Ugqvkw63XgeDfNsjAEv30gSKrV6LuPowsNILQiKy3zg+rLiW9JZ3hA8toZT/FvB33J/UD+2DgQKBgQDuDz9Co3CZYQVV2Zyr7QII1ofmUGAYH0KlVFEtm1xG43SJNXJd+Dpvw2BilqrWnPj+pFobl6wt697ARutWaO9qCL67voWA/7P7RBk5zhv2bRQzVE1qBy2oIxToyQgfbb/X5RzL4acXVe3k48wDVF8XO2iSLdV1EE0WLVtlzRR76QKBgQC68bct4Wuox9p7Jo2b5cS5BfLeRq51wFs8XoQxWHe9umuMnMiu5UNwtGpCInzcGD9BMxZOTG3ONUTFiJNXC4zSDolADbj8eGt39rKV5HiSqPAPAVU9x6W4GzwRE0bN2AEWI1r961HhTnVH8h8ylez+z5BOAsVHTq8dm6nzB3kn8QKBgQDkyw6XcxEiuBYynkRvEAgmilhuR80zIcghsVmbpXcYQj6cKBvUqF8xTurxlbB3NsIvqbFYV3sJX2nkDcTcdVmz5Ne7BK62fgpycM51udsyCT+i3WDRiDifIahU2fDOk+IPEomMgUDfspxCoZRPluUVJOmppBdEvPf5Wno+6szHEQKBgQCNfJ3YErEJt+Cqrj4lDJx8MH1lL3eg1Sn4IczJEBzoMqxtasgUXp5RMaruTO3VImDVdtXeAshkdjqLileBXNOCs8+68+fa5UTpMYRuH9IFpeiyYp7iODU7hxlKDx3acy43VCDs5uo8rMXk4uIrxf7tx6h+8mffFTVCImtY7YIL8QKBgDGMcXXFuTAF/PLEv9w2kH7vSsFLKcHrhlp+ljU5k2WemRj8f7Te+Ms/P4u8wXAWuYkJu5CfosTKTTliR47njFb9QL46vkvfu7WYE5aASeFtLFgC/JqLgpY3LNvf43mtm26bp5XK0YswCtiJ2/WE2/PjulqpX0tfunMjJEqf6UdR
+  charset: UTF-8
+  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnlwgtNDjPuTKOL0KZ3ekYGzzh6ZWSVkmz+n+iHWFODG3qUcFkX5ca1o4IJGrRS3UgBBOUisfVjRYIV1qvbg832iPKbC7VQt5dWyAP7+IB0gstnoErZxYisLgkvfsvgwrX6Zm665ImD34ScUqaqGSDXur0jipceI5aQbYhqGLbxmxwYu+1D0KdlOmPirUcTgNC/nYnOKnRj1evxlO2TRFWEf53IzEXhHKivOOE63qM/xZIc23J6xYYTOPKVAp169AcOGOakgrZ40umw0A8CgrTeCxfioLSnYWjSkYJN6/fsMOW+vear/MVJe7kWPLwyvZm3C8d/JGaLlFLv5RNHFq+QIDAQAB
+  timeoutExpress: 30m
+  productCode: QUICK_MSECURITY_PAY
+  notifyUrl: http://pay.aizhixin.com/alipay/callback
+  alipayServerUrl: https://openapi.alipay.com/gateway.do
+
+security:
+  id: ZxCjPay
+  key: F78726AD90A8FE8E945791AB86BB2AEF
+  sign_key: '*tp6QrZbyYUUERSC'
+  
+sys:
+  version: v0.0.2.24
