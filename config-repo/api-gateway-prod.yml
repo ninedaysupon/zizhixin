@@ -4,7 +4,7 @@ eureka:
     instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
   client:
     service-url:
-      defaultZone: http://192.168.211.100:5600/eureka/,http://192.168.211.101:5600/eureka/,http://192.168.211.102:5600/eureka/
+      defaultZone: http://192.168.211.100:5600/eureka/,http://192.168.211.101:5600/eureka/
 zuul:
   semaphore:
     max-semaphores: 20000
