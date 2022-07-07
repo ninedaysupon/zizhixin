@@ -54,6 +54,7 @@ spring:
     hibernate:
       ddl-auto: none
       naming.strategy: org.hibernate.cfg.EJB3NamingStrategy
+
 hystrix:
   command:
     default:
