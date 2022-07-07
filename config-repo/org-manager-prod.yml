@@ -75,7 +75,7 @@ spring:
       min-idle: 10
 
   kafka:
-      bootstrap-servers: 172.16.23.42:9092,172.16.100.43:9092,172.16.100.44:9092
+      bootstrap-servers: 192.168.211.100:9092,192.168.211.101:9092,192.168.211.102:9092
       group-id: PROD_ORG_CONSUMER_GROUP
 hystrix:
   threadpool:
@@ -109,7 +109,7 @@ logging.level.com.aizhixin.cloud: INFO
 
 
 zookeeper:
-  connecton: 172.16.23.42:2181,172.16.23.43:2181,172.16.23.44:2181
+  connecton: 192.168.211.100:2181,192.168.211.101:2181,192.168.211.102:2181
   path: /org/lock
   task: /org/task
 
