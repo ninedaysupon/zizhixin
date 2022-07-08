@@ -4,7 +4,7 @@ eureka:
     instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
   client:
     service-url:
-      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+      defaultZone: http://192.168.211.100:5600/eureka/,http://192.168.211.101:5600/eureka/
 spring:
   aop:
     auto: true
@@ -93,7 +93,7 @@ ribbon:
 sys:
   version: v0.0.0.12
 zookeeper:
-  connecton: 172.16.23.42:2181,172.16.23.43:2181,172.16.23.44:2181
+  connecton: 192.168.211.100:2181,192.168.211.101:2181,192.168.211.102:2181
   path: /diandian/lock
   task: /diandian/task
 zhixinapi:
