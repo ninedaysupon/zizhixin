@@ -6,7 +6,7 @@ eureka:
       cluster: MAIN
   client:
     service-url:
-      defaultZone: http://172.16.23.42:1111/eureka/,http://172.16.23.43:1111/eureka/
+      defaultZone: http://192.168.211.100:5600/eureka/,http://192.168.211.101:5600/eureka/
 spring:
   cloud:
     inetutils:
