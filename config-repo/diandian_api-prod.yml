@@ -25,10 +25,10 @@ spring:
     auto: true
     proxy-target-class: true
   redis:
-    host: 172.16.23.40
+    host: 192.168.211.102
     password:
     port: 6379
-    database: 1
+    database: 3
     pool:
       max-active: 80
       max-idle: 30
@@ -37,9 +37,9 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://172.16.23.21:3306/dd_api?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
-    username: dd_api
-    password: 
+    url: jdbc:mysql://192.168.3.231:3306/dd_api?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: root
+    password: 123456
     hikari:
       auto-commit: false
       minimum-idle: 10
