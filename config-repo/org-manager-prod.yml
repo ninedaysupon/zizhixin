@@ -26,7 +26,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://172.16.23.21:3306/org_api?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    url: jdbc:mysql://192.168.3.231:3306/org_api?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF8&useSSL=false
     username: org_api
     password: 
     hikari:
@@ -54,20 +54,20 @@ spring:
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       javax.persistence.sharedCache.mode: ENABLE_SELECTIVE
   redis:
-    host: 172.16.23.40
+    host: 192.168.211.102
     password:
     port: 6379
-    database: 5
+    database: 16
     pool:
       max-active: 100
       max-idle: 30
       max-wait: 20
       min-idle: 10
   zhixinredis:
-    host: 172.16.23.44
+    host: 192.168.211.102
     password:
     port: 6379
-    database: 2
+    database: 16
     pool:
       max-active: 100
       max-idle: 30
@@ -75,7 +75,7 @@ spring:
       min-idle: 10
 
   kafka:
-      bootstrap-servers: 172.16.23.42:9092,172.16.100.43:9092,172.16.100.44:9092
+      bootstrap-servers: 192.168.211.100:9092,192.168.211.101:9092,192.168.211.102:9092
       group-id: PROD_ORG_CONSUMER_GROUP
 hystrix:
   threadpool:
@@ -109,7 +109,7 @@ logging.level.com.aizhixin.cloud: INFO
 
 
 zookeeper:
-  connecton: 172.16.23.42:2181,172.16.23.43:2181,172.16.23.44:2181
+  connecton: 192.168.211.100:2181,192.168.211.101:2181,192.168.211.102:2181
   path: /org/lock
   task: /org/task
 
