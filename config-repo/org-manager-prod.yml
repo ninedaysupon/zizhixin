@@ -54,20 +54,20 @@ spring:
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       javax.persistence.sharedCache.mode: ENABLE_SELECTIVE
   redis:
-    host: 172.16.23.40
+    host: 192.168.211.102
     password:
     port: 6379
-    database: 5
+    database: 16
     pool:
       max-active: 100
       max-idle: 30
       max-wait: 20
       min-idle: 10
   zhixinredis:
-    host: 172.16.23.44
+    host: 192.168.211.102
     password:
     port: 6379
-    database: 2
+    database: 16
     pool:
       max-active: 100
       max-idle: 30
